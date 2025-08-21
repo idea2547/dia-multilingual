@@ -3,6 +3,7 @@ import torch
 from torch.utils.data import Dataset
 from pathlib import Path
 import torchaudio
+import subprocess
 
 class MultilangTTSDataset(Dataset):
     def __init__(self, manifest_path, lang_vocab, sample_rate=22050):
@@ -21,6 +22,25 @@ class MultilangTTSDataset(Dataset):
         vocab["<unk>"] = 1
         self.phoneme_vocab = vocab
         return lambda p: [vocab.get(c, 1) for c in p]
+    
+    def get_phonemes(self, text, lang):
+        """Get phonemes for different languages"""
+        if lang == "th":
+            # Use custom Thai phonemizer
+            try:
+                from tools.thai_phonemizer import phonemize_thai
+                return phonemize_thai(text)
+            except ImportError:
+                # Fallback to character-level
+                return text.replace(" ", "")
+        else:
+            try:
+                return subprocess.check_output(
+                    f"echo '{text}' | espeak-ng -v {lang} --ipa -q", 
+                    shell=True, text=True
+                ).strip()
+            except:
+                return text  # Fallback to original text
 
     def __len__(self):
         return len(self.data)

@@ -1,0 +1,20 @@
+[
+  {
+    "audio": "data/th/clips/sample1.wav",
+    "text": "สวัสดีครับ",
+    "phonemes": "s a w a t d i k r a p",
+    "lang": "th"
+  },
+  {
+    "audio": "data/th/clips/sample2.wav", 
+    "text": "ขอบคุณมาก",
+    "phonemes": "k h o b k h u n m a k",
+    "lang": "th"
+  },
+  {
+    "audio": "data/th/clips/sample3.wav",
+    "text": "ยินดีที่ได้รู้จัก",
+    "phonemes": "j i n d i t h i d a i r u c a k",
+    "lang": "th"
+  }
+]
